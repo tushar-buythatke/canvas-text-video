@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Canvas Text Video Renderer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <canvas id="canvas" aria-label="ASCII video renderer"></canvas>
+
+    <video id="video" muted loop playsinline preload="auto"></video>
+
+    <section id="overlay" class="overlay" aria-live="polite">
+      <p class="eyebrow">Real-time text luminance</p>
+      <h1>ASCII Video Canvas</h1>
+      <p class="description">
+        Load a local video file, then press Start. Each frame is downsampled
+        into the text grid and rendered as live typography.
+      </p>
+
+      <div class="controls">
+        <label class="file-input">
+          <span>Choose Video</span>
+          <input id="videoInput" type="file" accept="video/*" />
+        </label>
+        <button id="startButton" type="button">Start</button>
+      </div>
+
+      <p id="status" class="status">Waiting for a video file.</p>
+    </section>
+
+    <button
+      id="controlsToggle"
+      class="controls-toggle is-hidden"
+      type="button"
+      aria-controls="overlay"
+      aria-label="Toggle controls"
+    >
+      Controls
+    </button>
+
+    <script src="script.js"></script>
+  </body>
+</html>

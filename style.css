@@ -1,0 +1,216 @@
+:root {
+  --bg-top: #f6f0e8;
+  --bg-mid: #d8e2f0;
+  --ink: #1a2836;
+  --accent: #f0f5ff;
+  --accent-strong: #c4d1e8;
+  --panel: rgba(255, 251, 243, 0.86);
+  --panel-border: rgba(26, 40, 54, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+  min-height: 100dvh;
+  font-family: "Space Grotesk", "Avenir Next", "Trebuchet MS", sans-serif;
+  color: var(--ink);
+  overscroll-behavior: none;
+  touch-action: manipulation;
+  background:
+    radial-gradient(120vw 120vh at 8% 2%, rgba(255, 255, 255, 0.95), transparent 55%),
+    radial-gradient(90vw 80vh at 95% 85%, rgba(145, 172, 220, 0.22), transparent 55%),
+    linear-gradient(135deg, var(--bg-top), var(--bg-mid));
+}
+
+#canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  z-index: 1;
+}
+
+#video {
+  display: none;
+}
+
+.overlay {
+  position: fixed;
+  top: max(clamp(14px, 2.6vw, 24px), env(safe-area-inset-top));
+  left: max(clamp(14px, 2.6vw, 24px), env(safe-area-inset-left));
+  width: min(460px, calc(100vw - 28px));
+  max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 28px);
+  padding: 20px 22px;
+  border-radius: 18px;
+  border: 1px solid var(--panel-border);
+  background: var(--panel);
+  box-shadow:
+    0 24px 70px rgba(24, 37, 50, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(8px);
+  transform-origin: top left;
+  animation: panel-in 620ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: opacity 220ms ease, transform 220ms ease, visibility 220ms ease;
+  z-index: 2;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.overlay.hidden {
+  opacity: 0;
+  transform: translateY(-6px) scale(0.985);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(26, 40, 54, 0.72);
+}
+
+h1 {
+  margin: 8px 0 8px;
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  line-height: 1.05;
+}
+
+.description {
+  margin: 0;
+  color: rgba(26, 40, 54, 0.86);
+  line-height: 1.45;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.file-input {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 12px;
+  min-height: 44px;
+  border-radius: 11px;
+  border: 1px solid rgba(26, 40, 54, 0.22);
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.8);
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.file-input:hover {
+  transform: translateY(-1px);
+  background: #ffffff;
+}
+
+.file-input input {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+button {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  padding: 10px 16px;
+  min-height: 44px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #13263f;
+  background: linear-gradient(120deg, var(--accent), var(--accent-strong));
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  box-shadow: 0 8px 20px rgba(60, 84, 120, 0.24);
+}
+
+.controls-toggle {
+  position: fixed;
+  right: max(12px, env(safe-area-inset-right));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  z-index: 3;
+  min-width: 108px;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  background: rgba(255, 255, 255, 0.14);
+  color: #f9fbff;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(7px);
+}
+
+.controls-toggle.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+.status {
+  min-height: 1.4em;
+  margin: 12px 0 0;
+  font-size: 0.9rem;
+  color: rgba(26, 40, 54, 0.74);
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 720px) {
+  .overlay {
+    width: auto;
+    left: max(8px, env(safe-area-inset-left));
+    right: max(8px, env(safe-area-inset-right));
+    top: auto;
+    bottom: max(8px, env(safe-area-inset-bottom));
+    max-height: min(72dvh, 520px);
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .controls {
+    grid-template-columns: 1fr;
+  }
+
+  .file-input,
+  button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .status {
+    font-size: 0.84rem;
+  }
+}
