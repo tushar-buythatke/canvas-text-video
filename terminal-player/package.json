@@ -1,0 +1,13 @@
+{
+  "name": "canvas-fun-terminal-player",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Terminal-only ASCII video player for macOS terminal",
+  "main": "play.js",
+  "scripts": {
+    "play": "node play.js"
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.2.0"
+  }
+}

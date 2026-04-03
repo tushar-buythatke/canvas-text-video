@@ -1,0 +1,15 @@
+{
+  "name": "canvas-fun-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Desktop wrapper for Canvas Fun ASCII video renderer",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --enable-logging",
+    "start:video": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^31.7.7"
+  }
+}
